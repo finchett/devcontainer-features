@@ -1,0 +1,22 @@
+{
+    "id": "influx-cli",
+    "version": "1.0.0",
+    "name": "InfluxCli",
+    "description": "Installs the latest version of InfluxCLI.",
+    "options": {
+        "architecture": {
+            "type": "string",
+            "enum": ["x86_64", "arm64"],
+            "default": "x86_64",
+            "description": "What architecture of the InfluxCLI to use."
+        },
+        "version": {
+            "type": "string",
+            "default": "latest",
+            "description": "Which version of the InfluxCLI to use formatted like 1.2.3"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}

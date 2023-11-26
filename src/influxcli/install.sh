@@ -31,9 +31,8 @@ install_from_github_releases() {
     mkdir $influxDir
     wget $(wget -q -O - "https://api.github.com/repos/influxdata/influx-cli/releases/${releaseUrlSuffix}" |  jq -r ".body | select(contains(\"${archStr}\"))" | egrep -o "https?://[^ ]+linux-${archStr}.tar.gz") -P $influxDir
     tar xvzf $(find $influxDir -name '*influxdb2-client*') -C $influxDir
-    sudo cp "${influxDir}/influx /usr/local/bin/"
+    sudo cp ${influxDir}/influx /usr/local/bin/influx
     rm -rf $influxDir
-
 }
 
 check_packages wget

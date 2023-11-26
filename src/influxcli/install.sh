@@ -5,9 +5,20 @@ set -e
 ARCHITECTURE=${ARCHITECTURE:-"x86_64"}
 VERSION=${VERSION:-"latest"}
 
+apt_get_update_if_needed()
+{
+    if [ ! -d "/var/lib/apt/lists" ] || [ "$(ls /var/lib/apt/lists/ | wc -l)" = "0" ]; then
+        echo "Running apt-get update..."
+        apt-get update
+    else
+        echo "Skipping apt-get update."
+    fi
+}
+
+# Checks if packages are installed and installs them if not
 check_packages() {
     if ! dpkg -s "$@" > /dev/null 2>&1; then
-        apt_get_update
+        apt_get_update_if_needed
         apt-get -y install --no-install-recommends "$@"
     fi
 }
@@ -35,6 +46,6 @@ install_from_github_releases() {
     rm -rf $influxDir
 }
 
-check_packages wget
+check_packages wget jq
 install_from_github_releases
 

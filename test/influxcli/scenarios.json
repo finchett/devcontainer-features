@@ -2,10 +2,7 @@
     "influxcli": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
-            "influxcli": {
-                "architecture": "x86_64",
-                "version": "2.7.3"
-            }
+            "influxcli": {}
         }
     }
 }

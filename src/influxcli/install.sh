@@ -39,13 +39,18 @@ install_from_github_releases() {
 
     influxDir="/tmp/influxCLI"
 
+    rm -rf /tmp/influxCLI/
     mkdir "$influxDir"
-    wget $(wget -q -O - "https://api.github.com/repos/influxdata/influx-cli/releases/${releaseUrlSuffix}" | jq -r ".body | select(contains(\"${archStr}\"))" | egrep -o "https?://[^ ]+linux-${archStr}.tar.gz") -P $influxDir
+    
+    releasePage=$(wget -q -O - "https://api.github.com/repos/influxdata/influx-cli/releases/${releaseUrlSuffix}")
+    downloadUrl=$(echo $releasePage | jq -r ".body | select(contains(\"${archStr}\"))" | egrep -o "https?://[^ ]+linux-${archStr}.tar.gz")
+    
+    wget $downloadUrl -P $influxDir
 
     tar xvzf "$(find "$influxDir" -name '*influxdb2-client*')" -C "$influxDir"
     cp "${influxDir}/influx" "/usr/local/bin/influx"
     rm -rf "$influxDir"
 }
 
-check_packages wget jq
+check_packages wget jq ca-certificates
 install_from_github_releases

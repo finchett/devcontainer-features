@@ -5,8 +5,7 @@ set -e
 ARCHITECTURE=${ARCHITECTURE:-"x86_64"}
 VERSION=${VERSION:-"latest"}
 
-apt_get_update_if_needed()
-{
+apt_get_update_if_needed() {
     if [ ! -d "/var/lib/apt/lists" ] || [ "$(ls /var/lib/apt/lists/ | wc -l)" = "0" ]; then
         echo "Running apt-get update..."
         apt-get update
@@ -17,35 +16,36 @@ apt_get_update_if_needed()
 
 # Checks if packages are installed and installs them if not
 check_packages() {
-    if ! dpkg -s "$@" > /dev/null 2>&1; then
-        apt_get_update_if_needed
-        apt-get -y install --no-install-recommends "$@"
-    fi
+    for pkg in "$@"; do
+        if ! dpkg -s "$pkg" > /dev/null 2>&1; then
+            apt_get_update_if_needed
+            apt-get -y install --no-install-recommends "$pkg"
+        fi
+    done
 }
 
 install_from_github_releases() {
-
-    if [ "${ARCHITECTURE}" == "x86_64" ]; then
-        local archStr="amd64"
-    elif [ "${ARCHITECTURE}" == "arm64" ]; then
-        local archStr="arm64"
+    if [ "${ARCHITECTURE}" = "x86_64" ]; then
+        archStr="amd64"
+    elif [ "${ARCHITECTURE}" = "arm64" ]; then
+        archStr="arm64"
     fi
 
-    if [ "${VERSION}" == "latest" ]; then
-        local releaseUrlSuffix=$VERSION
+    if [ "${VERSION}" = "latest" ]; then
+        releaseUrlSuffix=$VERSION
     else
-        local releaseUrlSuffix="tags/v${VERSION}"
+        releaseUrlSuffix="tags/v${VERSION}"
     fi
 
-    local influxDir=/tmp/influxCLI
+    influxDir="/tmp/influxCLI"
 
-    mkdir $influxDir
-    wget $(wget -q -O - "https://api.github.com/repos/influxdata/influx-cli/releases/${releaseUrlSuffix}" |  jq -r ".body | select(contains(\"${archStr}\"))" | egrep -o "https?://[^ ]+linux-${archStr}.tar.gz") -P $influxDir
-    tar xvzf $(find $influxDir -name '*influxdb2-client*') -C $influxDir
-    sudo cp ${influxDir}/influx /usr/local/bin/influx
-    rm -rf $influxDir
+    mkdir "$influxDir"
+    wget $(wget -q -O - "https://api.github.com/repos/influxdata/influx-cli/releases/${releaseUrlSuffix}" | jq -r ".body | select(contains(\"${archStr}\"))" | egrep -o "https?://[^ ]+linux-${archStr}.tar.gz") -P $influxDir
+
+    tar xvzf "$(find "$influxDir" -name '*influxdb2-client*')" -C "$influxDir"
+    cp "${influxDir}/influx" "/usr/local/bin/influx"
+    rm -rf "$influxDir"
 }
 
 check_packages wget jq
 install_from_github_releases
-

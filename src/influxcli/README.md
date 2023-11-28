@@ -7,7 +7,7 @@ Installs the latest version of InfluxCLI.
 
 ```json
 "features": {
-    "ghcr.io/finchett/devcontainer-influxCLI/influxcli:1": {}
+    "ghcr.io/finchett/devcontainer-features/influxcli:1": {}
 }
 ```
 
@@ -22,4 +22,4 @@ Installs the latest version of InfluxCLI.
 
 ---
 
-_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/finchett/devcontainer-influxCLI/blob/main/src/influxcli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/finchett/devcontainer-features/blob/main/src/influxcli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

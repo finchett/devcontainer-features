@@ -1,5 +1,5 @@
 {
-    "id": "influx-cli",
+    "id": "influxcli",
     "version": "1.0.0",
     "name": "InfluxCli",
     "description": "Installs the latest version of InfluxCLI.",

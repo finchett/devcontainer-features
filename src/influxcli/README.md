@@ -1,16 +1,13 @@
 
-# InfluxCLI for Development Containers
+# InfluxCli (influxcli)
 
-A feature that installs the latest version of InfluxCLI.
+Installs the latest version of InfluxCLI.
 
 ## Example Usage
 
 ```json
 "features": {
-    "ghcr.io/finchett/devcontainer-influxcli/influx-cli": {
-        "architecture": "x86_64",
-        "version": "2.7.3"
-    }
+    "ghcr.io/finchett/devcontainer-influxCLI/influxcli:1": {}
 }
 ```
 
@@ -18,4 +15,11 @@ A feature that installs the latest version of InfluxCLI.
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| architecture | `x86_64` or `arm64`` | string | `x86_64` |
+| architecture | What architecture of the InfluxCLI to use. | string | x86_64 |
+| version | Which version of the InfluxCLI to use formatted like 1.2.3 | string | latest |
+
+
+
+---
+
+_Note: This file was auto-generated from the [devcontainer-feature.json](https://github.com/finchett/devcontainer-influxCLI/blob/main/src/influxcli/devcontainer-feature.json).  Add additional notes to a `NOTES.md`._

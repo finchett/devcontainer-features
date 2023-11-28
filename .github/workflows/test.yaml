@@ -15,6 +15,7 @@ jobs:
         features:
           - influxcli
         baseImage:
+          - debian:latest
           - ubuntu:latest
           - mcr.microsoft.com/devcontainers/base:ubuntu
     steps:

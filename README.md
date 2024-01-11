@@ -1,6 +1,4 @@
 # devcontainer features
-This repository is for features I have written for vscode development containers. It currently only contains one feature.
-
 ---
 
 **Influx Cli**
